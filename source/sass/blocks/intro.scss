@@ -2,32 +2,44 @@
   margin: 36px 40px;
 
   &__wrapper {
+    display: flex;
+    justify-content: space-around;
     width: 100%;
     max-width: 1920px;
     height: 456px;
-    padding: 82px 70px;
+
     background-color: rgba(235, 240, 250, 1);
     border-radius: 10px;
-    background-image: url('../../img/main_image.jpg');
-    background-repeat: no-repeat;
-    background-size: 910px 456px;
-    background-position: top right;
 
-    @include retina {
-      background-image: url("../img/main_image@2x.jpg");
+    @include vp-1280 {
+      height: max-content;
     }
   }
 
+
+
   &__text-wrapper {
-    max-width: 538px;
+    width: 600px;
+    margin-right: auto;
+    padding: 102px 20px 70px 70px;
+
+    @include vp-1280 {
+      width: 470px;
+      padding: 60px 20px 50px 50px;
+    }
   }
 
   &__title {
+    margin: 0;
     font-size: 30px;
     line-height: 48px;
     font-weight: 500;
     color: $color-fun-blue;
     letter-spacing: -0.02em;
+
+    @include vp-1440 {
+      font-size: 26px;
+    }
   }
 
   &__text {
@@ -57,6 +69,53 @@
       background-repeat: no-repeat;
       background-size: 100%;
       content: '';
+    }
+  }
+
+  &__image-wrapper {
+    position: relative;
+    width: 910px;
+    height: 456px;
+
+    border-radius: 0 10px 10px 0;
+    background: linear-gradient(0deg, rgba(228,234,252,1) 0%, rgba(232,238,255,1) 100%);
+
+    @include vp-1440 {
+      width: 680px;
+    }
+
+    @include vp-1280 {
+      width: 520px;
+    }
+
+    &::after {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 100%;
+      height: 456px;
+      background-image: url('../../img/main_image.jpg');
+      background-repeat: no-repeat;
+      background-size: contain;
+      background-position: 50% 100%;
+      content: '';
+      border-radius: 0 10px 10px 0;
+
+      @include retina {
+        background-image: url("../img/main_image@2x.jpg");
+      }
+
+      @include vp-1440 {
+        background-image: url('../../img/main_image_1440.jpg');
+
+        @include retina {
+          background-image: url("../img/main_image_1440@2x.jpg");
+        }
+      }
+
+      @include vp-1280 {
+        background-position: center;
+      }
     }
   }
 }
