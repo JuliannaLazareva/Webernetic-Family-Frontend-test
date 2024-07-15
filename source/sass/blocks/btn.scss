@@ -1,0 +1,21 @@
+.btn {
+  // display: inline-flex;
+  padding: 10px 20px;
+
+  color: $color-default-white;
+    background-color: #244C98;
+    border: none;
+    border-radius: 60px;
+    cursor: pointer;
+    transition: opacity $trans-default;
+
+  &:disabled {
+    opacity: 0.5;
+
+    pointer-events: none;
+  }
+
+  @include hover-focus {
+    opacity: 0.8;
+  }
+}

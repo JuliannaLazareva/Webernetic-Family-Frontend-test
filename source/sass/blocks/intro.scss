@@ -1,0 +1,62 @@
+.intro {
+  margin: 36px 40px;
+
+  &__wrapper {
+    width: 100%;
+    max-width: 1920px;
+    height: 456px;
+    padding: 82px 70px;
+    background-color: rgba(235, 240, 250, 1);
+    border-radius: 10px;
+    background-image: url('../../img/main_image.jpg');
+    background-repeat: no-repeat;
+    background-size: 910px 456px;
+    background-position: top right;
+
+    @include retina {
+      background-image: url("../img/main_image@2x.jpg");
+    }
+  }
+
+  &__text-wrapper {
+    max-width: 538px;
+  }
+
+  &__title {
+    font-size: 30px;
+    line-height: 48px;
+    font-weight: 500;
+    color: $color-fun-blue;
+    letter-spacing: -0.02em;
+  }
+
+  &__text {
+    margin-bottom: 34px;
+    line-height: 27px;
+    color: $color-dim-gray;
+    letter-spacing: -0.02em;
+  }
+
+  &__button {
+    position: relative;
+    width: 341px;
+    min-height: 68px;
+    padding: 12px 12px 12px 24px;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 28px;
+    text-align: left;
+
+    &::after {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      width: 44px;
+      height: 44px;
+      background-image: url('../../img/svg/button-arrow.svg');
+      background-repeat: no-repeat;
+      background-size: 100%;
+      content: '';
+    }
+  }
+}
