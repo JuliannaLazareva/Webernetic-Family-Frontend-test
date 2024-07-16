@@ -1,18 +1,30 @@
 .intro {
   margin: 36px 40px;
 
+  @include vp-1023 {
+    margin: 25px 24px;
+  }
+
+  @include vp-767 {
+    margin: 14px 24px;
+  }
+
   &__wrapper {
     display: flex;
     justify-content: space-around;
     width: 100%;
-    max-width: 1920px;
-    height: 456px;
+    // max-width: 1920px;
+    min-height: 456px;
 
     background-color: rgba(235, 240, 250, 1);
     border-radius: 10px;
 
-    @include vp-1280 {
+    @include vp-1439 {
       height: max-content;
+    }
+
+    @include vp-1023 {
+      flex-direction: column;
     }
   }
 
@@ -23,45 +35,103 @@
     margin-right: auto;
     padding: 102px 20px 70px 70px;
 
-    @include vp-1280 {
+    @include vp-1439 {
       width: 470px;
       padding: 60px 20px 50px 50px;
+    }
+
+    @include vp-1023 {
+      width: 100%;
+      padding: 24px;
+      margin-bottom: auto;
+    }
+
+    @include vp-767 {
+      padding-bottom: 18px;
     }
   }
 
   &__title {
     margin: 0;
+    margin-bottom: 20px;
     font-size: 30px;
     line-height: 48px;
     font-weight: 500;
     color: $color-fun-blue;
     letter-spacing: -0.02em;
 
-    @include vp-1440 {
+    @include vp-1919 {
+      margin-bottom: 16px;
       font-size: 26px;
+    }
+
+
+    @include vp-1023 {
+      margin-bottom: 17px;
+      font-size: 20px;
+      line-height: 32px;
+    }
+
+    @include vp-767 {
+      margin-bottom: 14px;
+      font-size: 17px;
+      line-height: 27px;
     }
   }
 
   &__text {
-    margin-bottom: 34px;
+    margin: 0;
+    margin-bottom: 36px;
     line-height: 27px;
     color: $color-dim-gray;
     letter-spacing: -0.02em;
+
+    @include vp-1023 {
+      margin-bottom: 24px;
+      font-size: 15px;
+      line-height: 24px;
+
+      br {
+        display: none;
+      }
+    }
+
+    @include vp-767 {
+      margin-bottom: 18px;
+      font-size: 13px;
+      line-height: 21px;
+
+      br {
+        display: none;
+      }
+    }
   }
 
   &__button {
     position: relative;
     width: 341px;
     min-height: 68px;
-    padding: 12px 12px 12px 24px;
-    font-size: 18px;
-    font-weight: 500;
-    line-height: 28px;
+    padding: 12px 64px 12px 24px;
+
     text-align: left;
+
+    @include vp-1023 {
+      width: 261px;
+      min-height: 50px;
+      padding: 16px 54px 16px 18px;
+      font-size: 15px;
+      line-height: 24px;
+    }
+
+    @include vp-767 {
+      width: 100%;
+      font-size: 15px;
+      line-height: 24px;
+    }
 
     &::after {
       position: absolute;
-      top: 12px;
+      top: 50%;
       right: 12px;
       width: 44px;
       height: 44px;
@@ -69,52 +139,90 @@
       background-repeat: no-repeat;
       background-size: 100%;
       content: '';
+      transform: translateY(-50%);
+
+      @include vp-1023 {
+        // top: 10px;
+        right: 10px;
+        width: 36px;
+        height: 36px;
+      }
     }
   }
 
   &__image-wrapper {
     position: relative;
     width: 910px;
-    height: 456px;
+    min-height: 456px;
 
     border-radius: 0 10px 10px 0;
     background: linear-gradient(0deg, rgba(228,234,252,1) 0%, rgba(232,238,255,1) 100%);
 
-    @include vp-1440 {
+    @include vp-1919 {
       width: 680px;
     }
 
-    @include vp-1280 {
+    @include vp-1439 {
       width: 520px;
+    }
+
+    @include vp-1023 {
+      width: 100%;
+      height: 360px;
+      border-radius: 0 0 10px 10px;
+    }
+
+    @include vp-767 {
+      height: 220px;
     }
 
     &::after {
       position: absolute;
-      top: 0;
+      top: 50%;
       right: 0;
       width: 100%;
       height: 456px;
-      background-image: url('../../img/main_image.jpg');
+      background-image: url('../img/main_image.jpg');
       background-repeat: no-repeat;
       background-size: contain;
-      background-position: 50% 100%;
+      background-position: center;
       content: '';
       border-radius: 0 10px 10px 0;
+      transform: translateY(-50%);
 
       @include retina {
         background-image: url("../img/main_image@2x.jpg");
       }
 
-      @include vp-1440 {
-        background-image: url('../../img/main_image_1440.jpg');
+      @include vp-1919 {
+        background-image: url('../img/main_image_1440.jpg');
 
         @include retina {
           background-image: url("../img/main_image_1440@2x.jpg");
         }
       }
 
-      @include vp-1280 {
-        background-position: center;
+      @include vp-1439 {
+        // background-position: center;
+      }
+
+      @include vp-1023 {
+        height: 360px;
+        background-image: url('../img/main_image_768.jpg');
+        border-radius: 0 0 10px 10px;
+
+        @include retina {
+          background-image: url("../img/main_image_768@2x.jpg");
+        }
+      }
+
+      @include vp-767 {
+        height: 220px;
+        background-image: url('../img/main_image_375.jpg');
+
+        @include retina {
+          background-image: url("../img/main_image_375@2x.jpg");
+        }
       }
     }
   }

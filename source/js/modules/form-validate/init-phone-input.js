@@ -1,90 +1,78 @@
-const baseCountryCode = '+7';
-const baseMatrix = ' (___) ___ __ __';
-const phoneLength = baseCountryCode.length + baseMatrix.length;
+const modal = document.querySelector('.modal');
+const form = modal.querySelector('.form');
+const modalInput = modal.querySelector('#login');
 
-const onPhoneInputInput = (e) => {
-  const matrix = `${baseCountryCode}${baseMatrix}`;
-  const def = matrix.replace(/\D/g, '');
-  let i = 0;
-  let val = e.target.value.replace(/\D/g, '');
-  if (def.length >= val.length) {
-    val = def;
+let getInputNumbersValue = function (input) {
+  return input.value.replace(/\D/g, '');
+};
+
+let onPhoneInput = function (e) {
+  let input = e.target;
+  let inputNumbersValue = getInputNumbersValue(input);
+  let formattedInputValue = '';
+  let selectionStart = input.selectionStart;
+
+  if (!inputNumbersValue) {
+    input.value = '';
+    return;
   }
-  e.target.value = matrix.replace(/./g, (a) => {
-    if (/[_\d]/.test(a) && i < val.length) {
-      return val.charAt(i++);
-    } else if (i >= val.length) {
-      return '';
+
+  if (input.value.length !== selectionStart) {
+    if (e.data && /\D/g.test(e.data)) {
+      input.value = inputNumbersValue;
+    }
+    return;
+  }
+
+  if (inputNumbersValue.indexOf(inputNumbersValue[0]) > -1) {
+    formattedInputValue = '+375' + ' ';
+    if (inputNumbersValue.length > 3) {
+      formattedInputValue += '(' + inputNumbersValue.substring(3, 5);
+    }
+    if (inputNumbersValue.length >= 6) {
+      formattedInputValue += ') ' + inputNumbersValue.substring(5, 8);
+    }
+    if (inputNumbersValue.length >= 9) {
+      formattedInputValue += '-' + inputNumbersValue.substring(8, 10);
+    }
+    if (inputNumbersValue.length >= 11) {
+      formattedInputValue += '-' + inputNumbersValue.substring(10, 12);
+    }
+  }
+
+  input.value = formattedInputValue;
+
+  form.onsubmit = function () {
+    if (input.value.length < 18) {
+      return false;
     } else {
-      return a;
+      return true;
     }
-  });
+  };
 };
 
-const onPhoneInputFocus = ({target}) => {
-  if (!target.value) {
-    target.value = baseCountryCode;
-  }
-  target.addEventListener('input', onPhoneInputInput);
-  target.addEventListener('blur', onPhoneInputBlur);
-  target.addEventListener('keydown', onPhoneInputKeydown);
-  target.addEventListener('paste', onPhoneInputPaste);
-  target.addEventListener('click', onPhoneInputClick);
-};
-
-const onPhoneInputClick = (e) => {
-  if (e.target.selectionStart < 4) {
-    e.preventDefault();
-    e.target.setSelectionRange(3, 3);
+let onPhoneKeyDown = function (e) {
+  let inputValue = e.target.value.replace(/\D/g, '');
+  if (e.keyCode === 8 && inputValue.length === 1) {
+    e.target.value = '';
   }
 };
 
-const onPhoneInputPaste = (e) => {
-  e.target.setSelectionRange(0, 0);
-  if (!e.target.selectionStart) {
-    setTimeout(() => {
-      if (e.target.value.startsWith('+7')) {
-        return;
-      }
-      if (e.target.value.startsWith('+8')) {
-        e.target.value = `+7 ${e.target.value.slice(3)}`;
-        return;
-      }
-      e.target.value = '';
-    });
-  }
-};
+let onPhonePaste = function (e) {
+  let pasted = e.clipboardData || window.clipboardData;
+  let input = e.target;
+  let inputNumbersValue = getInputNumbersValue(input);
 
-const onPhoneInputKeydown = (e) => {
-  if (e.target.selectionStart < 4 && (e.keyCode === 37 || e.keyCode === 13)) {
-    e.preventDefault();
-    e.target.setSelectionRange(3, 3);
-  }
-};
-
-const onPhoneInputBlur = ({target}) => {
-  if (target.value === baseCountryCode) {
-    const parent = target.closest('[data-validate-type="phone"]');
-    target.value = '';
-    if (!parent.hasAttribute('data-required')) {
-      parent.classList.remove('is-valid');
-      parent.classList.remove('is-invalid');
-      const parentMessage = parent.querySelector('.input-message');
-      if (parentMessage) {
-        parentMessage.remove();
-      }
+  if (pasted) {
+    let pastedText = pasted.getData('Text');
+    if (/\D/g.test(pastedText)) {
+      input.value = inputNumbersValue;
     }
-    parent.classList.remove('not-empty');
-    target.removeEventListener('input', onPhoneInputInput);
-    target.removeEventListener('blur', onPhoneInputBlur);
-    target.removeEventListener('keydown', onPhoneInputKeydown);
-    target.removeEventListener('paste', onPhoneInputPaste);
-    target.removeEventListener('click', onPhoneInputClick);
   }
 };
 
-export const initPhoneInput = (parent) => {
-  const input = parent.querySelector('input');
-  parent.dataset.phoneLength = phoneLength;
-  input.addEventListener('focus', onPhoneInputFocus);
+export const initPhoneInput = () => {
+  modalInput.addEventListener('keydown', onPhoneKeyDown);
+  modalInput.addEventListener('input', onPhoneInput, false);
+  modalInput.addEventListener('paste', onPhonePaste, false);
 };
